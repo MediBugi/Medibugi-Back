@@ -56,19 +56,44 @@ public class HospitalSaveServiceImpl implements HospitalService {
 
 
         JSONArray hosDataList= new JSONArray();
-        List<Hospital> hosList = hosRepo.findAll();
+        List<Hospital> hospital = hosRepo.findAll();
 
-        for(int i=0;i<hosList.size();i++){
-            JSONObject jo = new JSONObject();
-            jo.put("yadmNm",hosList.get(i).getYadmNm());
-            jo.put("addr",hosList.get(i).getAddr());
-            jo.put("telno",hosList.get(i).getTelno());
-            hosDataList.add(jo);
+        for(int i=0;i<5;i++){
+            JSONObject jsonHospital = new JSONObject();
+            jsonHospital.put("hoscnt",hospital.get(i).getHoscnt());
+            jsonHospital.put("yadmNm", hospital.get(i).getYadmNm());
+            jsonHospital.put("clCdNm", hospital.get(i).getClCdNm());
+            jsonHospital.put("sidoCdNm", hospital.get(i).getSidoCdNm());
+            jsonHospital.put("sgguCdNm", hospital.get(i).getSgguCdNm());
+            jsonHospital.put("emdongNm", hospital.get(i).getEmdongNm());
+            jsonHospital.put("addr", hospital.get(i).getAddr());
+            jsonHospital.put("telno", hospital.get(i).getTelno());
+            jsonHospital.put("hospUrl", hospital.get(i).getHospUrl());
+            jsonHospital.put("drTotCnt", hospital.get(i).getDrTotCnt());
+            jsonHospital.put("mediDepart", hospital.get(i).getMediDepart());
+            jsonHospital.put("sunRestDay", hospital.get(i).getSunRestDay());
+            jsonHospital.put("restDay", hospital.get(i).getRestDay());
+            jsonHospital.put("lunchNom", hospital.get(i).getLunchNom());
+            jsonHospital.put("lunchSat", hospital.get(i).getLunchSat());
+            jsonHospital.put("receipt_week", hospital.get(i).getReceipt_week());
+            jsonHospital.put("receipt_Sat", hospital.get(i).getReceipt_Sat());
+            jsonHospital.put("chSunStart", hospital.get(i).getChSunStart());
+            jsonHospital.put("chSunEnd", hospital.get(i).getChSunEnd());
+            jsonHospital.put("chMonStart", hospital.get(i).getChMonStart());
+            jsonHospital.put("chMonEnd", hospital.get(i).getChMonEnd());
+            jsonHospital.put("chTueStart", hospital.get(i).getChTueStart());
+            jsonHospital.put("chTueEnd", hospital.get(i).getChTueEnd());
+            jsonHospital.put("chWenStart", hospital.get(i).getChWenStart());
+            jsonHospital.put("chWenEnd", hospital.get(i).getChWenEnd());
+            jsonHospital.put("chThuStart", hospital.get(i).getChThuStart());
+            jsonHospital.put("chThuEnd", hospital.get(i).getChThuEnd());
+            jsonHospital.put("chFriStart", hospital.get(i).getChFriStart());
+            jsonHospital.put("chFriEnd", hospital.get(i).getChFriEnd());
+            jsonHospital.put("chSatStart", hospital.get(i).getChSatStart());
+            jsonHospital.put("chSatEnd", hospital.get(i).getChSatEnd());
+            hosDataList.add(jsonHospital);
         }
 
-        System.out.println(hosDataList.toJSONString());
-        System.out.println("검색결과");
-            System.out.println("---> " + hosList.toString());
         return hosDataList;
     }
 
