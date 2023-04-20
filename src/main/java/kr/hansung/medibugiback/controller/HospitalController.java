@@ -20,6 +20,7 @@ public class HospitalController {
 
     @Autowired
     private HospitalService hospitalService;
+
     @GetMapping("/apitest")
     public String callApiWithXml() {
         StringBuilder result = new StringBuilder();
