@@ -12,5 +12,6 @@ public interface HospitalRepository extends JpaRepository<Hospital,Long> {
 
     List<Hospital> findAll();
 
+    List<Hospital> findByMediDepart(String depart);
     boolean existsByTelno(String tel);
 }

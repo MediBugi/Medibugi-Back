@@ -14,4 +14,7 @@ import java.util.List;
 public class MemberController {
     private final MemberRepository memberRepository;
 
+
+
+
 }

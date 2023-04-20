@@ -20,6 +20,7 @@ public class HospitalController {
 
     @Autowired
     private HospitalService hospitalService;
+
     @GetMapping("/apitest")
     public String callApiWithXml() {
         StringBuilder result = new StringBuilder();
@@ -51,8 +52,8 @@ public class HospitalController {
     }
 
     @GetMapping("/getHospitalList")
-    public JSONArray hospitalList(){
-      JSONArray ja = hospitalService.getHospitalList();
+    public JSONArray hospitalList(@RequestParam String depart){
+      JSONArray ja = hospitalService.getHospitalList(depart);
 
         return ja;
     }
