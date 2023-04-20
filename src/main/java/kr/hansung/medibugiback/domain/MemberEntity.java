@@ -18,6 +18,6 @@ public class MemberEntity {
     String name; // 이름
     String telno; // 전화번호
     String address; // 주소
-    Long gender; // 성별
+    String gender; // 성별
     Date birthday; // 생일
 }
