@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,4 +22,5 @@ public class MemberEntity {
     String address; // 주소
     String gender; // 성별
     Date birthday; // 생일
+
 }
