@@ -44,10 +44,11 @@ public class FavoriteService {
         return true;
     }
 
-    /*
+
     public JSONArray getFavoriteList(String member_id){
 
         JSONArray jsonArray = new JSONArray();
+
 
         MemberEntity member = memberRepo.findByMemberid(member_id);
 
@@ -55,8 +56,11 @@ public class FavoriteService {
 
         for(int i=0;i<favoriteList.size();i++){
             JSONObject jo = new JSONObject();
-            jo.put("hospitalName", favoriteList.get(i).)
+            jo.put("hospitalName", favoriteList.get(i).getHospital().getYadmNm());
+            jsonArray.add(jo);
         }
+
+        return jsonArray;
     }
-    */
+
 }
