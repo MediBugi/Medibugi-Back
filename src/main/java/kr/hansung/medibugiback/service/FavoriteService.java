@@ -4,6 +4,7 @@ package kr.hansung.medibugiback.service;
 import kr.hansung.medibugiback.domain.Favorite;
 import kr.hansung.medibugiback.domain.Hospital;
 import kr.hansung.medibugiback.domain.MemberEntity;
+import kr.hansung.medibugiback.dto.FavoriteRequestDto;
 import kr.hansung.medibugiback.repository.FavoriteRepository;
 import kr.hansung.medibugiback.repository.HospitalRepository;
 import kr.hansung.medibugiback.repository.MemberRepository;
@@ -23,7 +24,9 @@ public class FavoriteService {
     private final MemberRepository memberRepo;
     private final HospitalRepository hosRepo;
 
-    public boolean addFavorite(Long hoscnt, String member_id){
+    public boolean addFavorite(FavoriteRequestDto favoriteRequestDto){
+        Long hoscnt = favoriteRequestDto.getHoscnt();
+        String member_id = favoriteRequestDto.getMember_id();
         Hospital hospital = hosRepo.findByHoscnt(hoscnt);
         MemberEntity member = memberRepo.findByMemberid(member_id);
 

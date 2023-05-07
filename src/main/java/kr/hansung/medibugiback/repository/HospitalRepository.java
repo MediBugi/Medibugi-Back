@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface HospitalRepository extends JpaRepository<Hospital,Long> {
 
+
     Hospital findByYadmNm(String name);
 
     Hospital findByHoscnt(Long hoscnt);
