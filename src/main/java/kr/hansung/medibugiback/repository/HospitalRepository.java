@@ -16,7 +16,6 @@ public interface HospitalRepository extends JpaRepository<Hospital,Long> {
     Hospital findByYadmNm(String name);
 
     Hospital findByHoscnt(Long hoscnt);
-    Page<Hospital> findAll(PageRequest pageRequest);
 
     List<Hospital> findByMediDepart(String depart);
     boolean existsByTelno(String tel);

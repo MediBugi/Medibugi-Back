@@ -68,8 +68,7 @@ public class HospitalController {
 
     @GetMapping("/getAllList")
     public JSONArray getHospitalList(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize")int pageSize){
-
-        return null;
+        return hospitalService.getHospitalList(pageNum,pageSize);
     }
 }
 
