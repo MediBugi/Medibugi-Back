@@ -22,8 +22,8 @@ public class FavoriteController {
         return favoriteService.addFavorite(favoriteRequestDto);
     }
     @PostMapping("/delete")
-    public boolean deleteFavorite(@RequestParam("hoscnt") Long hoscnt, @RequestParam("member_id") String member_id){
-        return favoriteService.deleteFavorite(hoscnt,member_id);
+    public boolean deleteFavorite(@RequestBody FavoriteRequestDto favoriteRequestDto){
+        return favoriteService.deleteFavorite(favoriteRequestDto);
     }
 
     @GetMapping("/getFavoriteList")

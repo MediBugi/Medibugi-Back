@@ -35,7 +35,9 @@ public class FavoriteService {
         return true;
     }
 
-    public boolean deleteFavorite(Long hoscnt, String member_id){
+    public boolean deleteFavorite(FavoriteRequestDto favoriteRequestDto){
+        Long hoscnt = favoriteRequestDto.getHoscnt();
+        String member_id = favoriteRequestDto.getMember_id();
         Hospital hospital = hosRepo.findByHoscnt(hoscnt);
         MemberEntity member = memberRepo.findByMemberid(member_id);
 
