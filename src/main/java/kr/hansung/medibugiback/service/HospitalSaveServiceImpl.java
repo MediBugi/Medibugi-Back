@@ -198,6 +198,153 @@ public class HospitalSaveServiceImpl implements HospitalService {
     }
 
     @Override
+    public JSONArray getHospitalListBySido(int pageNum, int pageSize, String sido) {
+        JSONArray hosDataList= new JSONArray();
+        PageRequest pageRequest = PageRequest.of(pageNum,pageSize);
+
+
+        Page<Hospital> hospitalPage = hosRepo.findBySidoCdNm(sido,pageRequest);
+
+        for(Hospital hospital : hospitalPage.getContent()){
+            JSONObject jsonHospital = new JSONObject();
+            jsonHospital.put("hoscnt",hospital.getHoscnt());
+            jsonHospital.put("yadmNm", hospital.getYadmNm());
+            jsonHospital.put("clCdNm", hospital.getClCdNm());
+            jsonHospital.put("sidoCdNm", hospital.getSidoCdNm());
+            jsonHospital.put("sgguCdNm", hospital.getSgguCdNm());
+            jsonHospital.put("emdongNm", hospital.getEmdongNm());
+            jsonHospital.put("addr", hospital.getAddr());
+            jsonHospital.put("telno", hospital.getTelno());
+            jsonHospital.put("hospUrl", hospital.getHospUrl());
+            jsonHospital.put("drTotCnt", hospital.getDrTotCnt());
+            jsonHospital.put("mediDepart", hospital.getMediDepart());
+            jsonHospital.put("sunRestDay", hospital.getSunRestDay());
+            jsonHospital.put("restDay", hospital.getRestDay());
+            jsonHospital.put("lunchNom", hospital.getLunchNom());
+            jsonHospital.put("lunchSat", hospital.getLunchSat());
+            jsonHospital.put("receipt_week", hospital.getReceipt_week());
+            jsonHospital.put("receipt_Sat", hospital.getReceipt_Sat());
+            jsonHospital.put("chSunStart", hospital.getChSunStart());
+            jsonHospital.put("chSunEnd", hospital.getChSunEnd());
+            jsonHospital.put("chMonStart", hospital.getChMonStart());
+            jsonHospital.put("chMonEnd", hospital.getChMonEnd());
+            jsonHospital.put("chTueStart", hospital.getChTueStart());
+            jsonHospital.put("chTueEnd", hospital.getChTueEnd());
+            jsonHospital.put("chWenStart", hospital.getChWenStart());
+            jsonHospital.put("chWenEnd", hospital.getChWenEnd());
+            jsonHospital.put("chThuStart", hospital.getChThuStart());
+            jsonHospital.put("chThuEnd", hospital.getChThuEnd());
+            jsonHospital.put("chFriStart", hospital.getChFriStart());
+            jsonHospital.put("chFriEnd", hospital.getChFriEnd());
+            jsonHospital.put("chSatStart", hospital.getChSatStart());
+            jsonHospital.put("chSatEnd", hospital.getChSatEnd());
+            jsonHospital.put("x", hospital.getX());
+            jsonHospital.put("y", hospital.getY());
+            hosDataList.add(jsonHospital);
+        }
+
+        return hosDataList;
+    }
+
+    @Override
+    public JSONArray getHospitalListBySidoAndDepart(int pageNum, int pageSize, String sido, String depart) {
+        JSONArray hosDataList= new JSONArray();
+        PageRequest pageRequest = PageRequest.of(pageNum,pageSize);
+
+
+        Page<Hospital> hospitalPage = hosRepo.findBySidoCdNmAndMediDepart(sido,depart,pageRequest);
+
+        for(Hospital hospital : hospitalPage.getContent()){
+            JSONObject jsonHospital = new JSONObject();
+            jsonHospital.put("hoscnt",hospital.getHoscnt());
+            jsonHospital.put("yadmNm", hospital.getYadmNm());
+            jsonHospital.put("clCdNm", hospital.getClCdNm());
+            jsonHospital.put("sidoCdNm", hospital.getSidoCdNm());
+            jsonHospital.put("sgguCdNm", hospital.getSgguCdNm());
+            jsonHospital.put("emdongNm", hospital.getEmdongNm());
+            jsonHospital.put("addr", hospital.getAddr());
+            jsonHospital.put("telno", hospital.getTelno());
+            jsonHospital.put("hospUrl", hospital.getHospUrl());
+            jsonHospital.put("drTotCnt", hospital.getDrTotCnt());
+            jsonHospital.put("mediDepart", hospital.getMediDepart());
+            jsonHospital.put("sunRestDay", hospital.getSunRestDay());
+            jsonHospital.put("restDay", hospital.getRestDay());
+            jsonHospital.put("lunchNom", hospital.getLunchNom());
+            jsonHospital.put("lunchSat", hospital.getLunchSat());
+            jsonHospital.put("receipt_week", hospital.getReceipt_week());
+            jsonHospital.put("receipt_Sat", hospital.getReceipt_Sat());
+            jsonHospital.put("chSunStart", hospital.getChSunStart());
+            jsonHospital.put("chSunEnd", hospital.getChSunEnd());
+            jsonHospital.put("chMonStart", hospital.getChMonStart());
+            jsonHospital.put("chMonEnd", hospital.getChMonEnd());
+            jsonHospital.put("chTueStart", hospital.getChTueStart());
+            jsonHospital.put("chTueEnd", hospital.getChTueEnd());
+            jsonHospital.put("chWenStart", hospital.getChWenStart());
+            jsonHospital.put("chWenEnd", hospital.getChWenEnd());
+            jsonHospital.put("chThuStart", hospital.getChThuStart());
+            jsonHospital.put("chThuEnd", hospital.getChThuEnd());
+            jsonHospital.put("chFriStart", hospital.getChFriStart());
+            jsonHospital.put("chFriEnd", hospital.getChFriEnd());
+            jsonHospital.put("chSatStart", hospital.getChSatStart());
+            jsonHospital.put("chSatEnd", hospital.getChSatEnd());
+            jsonHospital.put("x", hospital.getX());
+            jsonHospital.put("y", hospital.getY());
+            hosDataList.add(jsonHospital);
+        }
+
+        return hosDataList;
+    }
+
+    @Override
+    public JSONArray getHospitalListBySidoAndSggu(int pageNum, int pageSize, String sido, String sggu) {
+        JSONArray hosDataList= new JSONArray();
+        PageRequest pageRequest = PageRequest.of(pageNum,pageSize);
+
+
+        Page<Hospital> hospitalPage = hosRepo.findBySidoCdNmAndSgguCdNm(sido,sggu,pageRequest);
+
+        for(Hospital hospital : hospitalPage.getContent()){
+            JSONObject jsonHospital = new JSONObject();
+            jsonHospital.put("hoscnt",hospital.getHoscnt());
+            jsonHospital.put("yadmNm", hospital.getYadmNm());
+            jsonHospital.put("clCdNm", hospital.getClCdNm());
+            jsonHospital.put("sidoCdNm", hospital.getSidoCdNm());
+            jsonHospital.put("sgguCdNm", hospital.getSgguCdNm());
+            jsonHospital.put("emdongNm", hospital.getEmdongNm());
+            jsonHospital.put("addr", hospital.getAddr());
+            jsonHospital.put("telno", hospital.getTelno());
+            jsonHospital.put("hospUrl", hospital.getHospUrl());
+            jsonHospital.put("drTotCnt", hospital.getDrTotCnt());
+            jsonHospital.put("mediDepart", hospital.getMediDepart());
+            jsonHospital.put("sunRestDay", hospital.getSunRestDay());
+            jsonHospital.put("restDay", hospital.getRestDay());
+            jsonHospital.put("lunchNom", hospital.getLunchNom());
+            jsonHospital.put("lunchSat", hospital.getLunchSat());
+            jsonHospital.put("receipt_week", hospital.getReceipt_week());
+            jsonHospital.put("receipt_Sat", hospital.getReceipt_Sat());
+            jsonHospital.put("chSunStart", hospital.getChSunStart());
+            jsonHospital.put("chSunEnd", hospital.getChSunEnd());
+            jsonHospital.put("chMonStart", hospital.getChMonStart());
+            jsonHospital.put("chMonEnd", hospital.getChMonEnd());
+            jsonHospital.put("chTueStart", hospital.getChTueStart());
+            jsonHospital.put("chTueEnd", hospital.getChTueEnd());
+            jsonHospital.put("chWenStart", hospital.getChWenStart());
+            jsonHospital.put("chWenEnd", hospital.getChWenEnd());
+            jsonHospital.put("chThuStart", hospital.getChThuStart());
+            jsonHospital.put("chThuEnd", hospital.getChThuEnd());
+            jsonHospital.put("chFriStart", hospital.getChFriStart());
+            jsonHospital.put("chFriEnd", hospital.getChFriEnd());
+            jsonHospital.put("chSatStart", hospital.getChSatStart());
+            jsonHospital.put("chSatEnd", hospital.getChSatEnd());
+            jsonHospital.put("x", hospital.getX());
+            jsonHospital.put("y", hospital.getY());
+            hosDataList.add(jsonHospital);
+        }
+
+        return hosDataList;
+    }
+
+    @Override
     public JSONArray getHospitalList(int pageNum, int pageSize, String sido, String sggu,String depart) {
         JSONArray jsonArray = new JSONArray();
         PageRequest pageRequest = PageRequest.of(pageNum,pageSize);

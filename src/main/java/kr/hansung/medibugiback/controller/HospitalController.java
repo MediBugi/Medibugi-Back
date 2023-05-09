@@ -62,6 +62,23 @@ public class HospitalController {
     @GetMapping("/getHospitalListByLocation")
     public JSONArray hospitalListByLocation(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize")int pageSize, @RequestParam
             ("sido")String sido, @RequestParam("sggu") String sggu, @RequestParam("depart")String depart){
+        if(sido.equals("전체")&&sggu.equals("전체")&&depart.equals("전체")){
+            return hospitalService.getHospitalList(pageNum,pageSize);
+        }
+        if(sido.equals("전체")&&sggu.equals("전체")&&!depart.equals("전체")){
+            return hospitalService.getHospitalList(pageNum, pageSize, depart);
+        }
+        if(!sido.equals("전체")&&sggu.equals("전체")&&!depart.equals("전체")){
+            return hospitalService.getHospitalListBySidoAndDepart(pageNum, pageSize, sido, depart);
+        }
+        if(!sido.equals("전체")&&!sggu.equals("전체")&&depart.equals("전체")){
+            return hospitalService.getHospitalListBySidoAndSggu(pageNum, pageSize, sido, sggu);
+        }
+        if(!sido.equals("전체")&&sggu.equals("전체")&&depart.equals("전체")){
+            return hospitalService.getHospitalListBySido(pageNum, pageSize, sido);
+        }
+
+
         JSONArray ja = hospitalService.getHospitalList(pageNum, pageSize, sido, sggu,depart);
         return ja;
     }
