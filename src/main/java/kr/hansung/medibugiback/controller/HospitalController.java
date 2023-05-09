@@ -61,8 +61,8 @@ public class HospitalController {
 
     @GetMapping("/getHospitalListByLocation")
     public JSONArray hospitalListByLocation(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize")int pageSize, @RequestParam
-            ("sido")String sido, @RequestParam("sggu") String sggu){
-        JSONArray ja = hospitalService.getHospitalList(pageNum, pageSize, sido, sggu);
+            ("sido")String sido, @RequestParam("sggu") String sggu, @RequestParam("depart")String depart){
+        JSONArray ja = hospitalService.getHospitalList(pageNum, pageSize, sido, sggu,depart);
         return ja;
     }
 

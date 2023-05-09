@@ -16,5 +16,5 @@ public interface HospitalService {
 
     public JSONArray getHospitalList(int pageNum, int pageSize, String depart);
 
-    public JSONArray getHospitalList(int pageNuj, int pageSize,String sido, String sggu);
+    public JSONArray getHospitalList(int pageNuj, int pageSize,String sido, String sggu,String depart);
 }

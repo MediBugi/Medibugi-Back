@@ -20,7 +20,7 @@ public interface HospitalRepository extends JpaRepository<Hospital,Long> {
     List<Hospital> findByMediDepart(String depart);
     boolean existsByTelno(String tel);
 
-    Page<Hospital> findBySidoCdNmAndSgguCdNm(String sido, String sggu,PageRequest pageRequest);
+    Page<Hospital> findBySidoCdNmAndSgguCdNmAndMediDepart(String sido, String sggu,String depart,PageRequest pageRequest);
 
     Page<Hospital> findByMediDepart(String depart, PageRequest pageRequest);
 }

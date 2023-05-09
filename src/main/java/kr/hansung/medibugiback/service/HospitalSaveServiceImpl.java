@@ -198,10 +198,10 @@ public class HospitalSaveServiceImpl implements HospitalService {
     }
 
     @Override
-    public JSONArray getHospitalList(int pageNum, int pageSize, String sido, String sggu) {
+    public JSONArray getHospitalList(int pageNum, int pageSize, String sido, String sggu,String depart) {
         JSONArray jsonArray = new JSONArray();
         PageRequest pageRequest = PageRequest.of(pageNum,pageSize);
-        Page<Hospital> hospitalPage = hosRepo.findBySidoCdNmAndSgguCdNm(sido,sggu,pageRequest);
+        Page<Hospital> hospitalPage = hosRepo.findBySidoCdNmAndSgguCdNmAndMediDepart(sido,sggu,depart,pageRequest);
 
         for(Hospital hospital : hospitalPage.getContent()){
             JSONObject jsonHospital = new JSONObject();
