@@ -13,19 +13,17 @@ import java.util.List;
 public interface HospitalRepository extends JpaRepository<Hospital,Long> {
 
 
-    Hospital findByYadmNm(String name);
-
     Hospital findByHoscnt(Long hoscnt);
 
     List<Hospital> findByMediDepart(String depart);
     boolean existsByTelno(String tel);
 
-    Page<Hospital> findBySidoCdNm(String sido, PageRequest pageRequest);
+    Page<Hospital> findByAddrContaining(String addr, PageRequest pageRequest);
 
-    Page<Hospital> findBySidoCdNmAndMediDepart(String sido, String depart,PageRequest pageRequest);
+    Page<Hospital> findByAddrContainingAndMediDepart(String sido, String depart, PageRequest pageRequest);
 
-    Page<Hospital> findBySidoCdNmAndSgguCdNm(String sido, String sggu,PageRequest pageRequest);
-    Page<Hospital> findBySidoCdNmAndSgguCdNmAndMediDepart(String sido, String sggu,String depart,PageRequest pageRequest);
+    Page<Hospital> findByAddrContainingAndAddrContaining(String sido,String sggu,PageRequest pageRequest);
 
+    Page<Hospital> findByAddrContainingAndAddrContainingAndMediDepart(String sido, String sggu, String depart, PageRequest pageRequest);
     Page<Hospital> findByMediDepart(String depart, PageRequest pageRequest);
 }

@@ -203,7 +203,7 @@ public class HospitalSaveServiceImpl implements HospitalService {
         PageRequest pageRequest = PageRequest.of(pageNum,pageSize);
 
 
-        Page<Hospital> hospitalPage = hosRepo.findBySidoCdNm(sido,pageRequest);
+        Page<Hospital> hospitalPage = hosRepo.findByAddrContaining(sido,pageRequest);
 
         for(Hospital hospital : hospitalPage.getContent()){
             JSONObject jsonHospital = new JSONObject();
@@ -252,7 +252,7 @@ public class HospitalSaveServiceImpl implements HospitalService {
         PageRequest pageRequest = PageRequest.of(pageNum,pageSize);
 
 
-        Page<Hospital> hospitalPage = hosRepo.findBySidoCdNmAndMediDepart(sido,depart,pageRequest);
+        Page<Hospital> hospitalPage = hosRepo.findByAddrContainingAndMediDepart(sido,depart,pageRequest);
 
         for(Hospital hospital : hospitalPage.getContent()){
             JSONObject jsonHospital = new JSONObject();
@@ -301,7 +301,7 @@ public class HospitalSaveServiceImpl implements HospitalService {
         PageRequest pageRequest = PageRequest.of(pageNum,pageSize);
 
 
-        Page<Hospital> hospitalPage = hosRepo.findBySidoCdNmAndSgguCdNm(sido,sggu,pageRequest);
+        Page<Hospital> hospitalPage = hosRepo.findByAddrContainingAndAddrContaining(sido,sggu,pageRequest);
 
         for(Hospital hospital : hospitalPage.getContent()){
             JSONObject jsonHospital = new JSONObject();
@@ -348,7 +348,7 @@ public class HospitalSaveServiceImpl implements HospitalService {
     public JSONArray getHospitalList(int pageNum, int pageSize, String sido, String sggu,String depart) {
         JSONArray jsonArray = new JSONArray();
         PageRequest pageRequest = PageRequest.of(pageNum,pageSize);
-        Page<Hospital> hospitalPage = hosRepo.findBySidoCdNmAndSgguCdNmAndMediDepart(sido,sggu,depart,pageRequest);
+        Page<Hospital> hospitalPage = hosRepo.findByAddrContainingAndAddrContainingAndMediDepart(sido,sggu,depart,pageRequest);
 
         for(Hospital hospital : hospitalPage.getContent()){
             JSONObject jsonHospital = new JSONObject();
