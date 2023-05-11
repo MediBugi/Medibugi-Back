@@ -52,40 +52,40 @@ public class HospitalController {
     }
 
     @GetMapping("/getHospitalList")
-    public JSONArray hospitalList(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize")int pageSize, @RequestParam("depart")
+    public JSONArray hospitalList(@RequestParam("depart")
                                   String depart){
-      JSONArray ja = hospitalService.getHospitalList(pageNum,pageSize,depart);
+      JSONArray ja = hospitalService.getHospitalList(depart);
 
         return ja;
     }
 
     @GetMapping("/getHospitalListByLocation")
-    public JSONArray hospitalListByLocation(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize")int pageSize, @RequestParam
+    public JSONArray hospitalListByLocation(@RequestParam
             ("sido")String sido, @RequestParam("sggu") String sggu, @RequestParam("depart")String depart){
         if(sido.equals("전체")&&sggu.equals("전체")&&depart.equals("전체")){
-            return hospitalService.getHospitalList(pageNum,pageSize);
+            return hospitalService.getHospitalList();
         }
         if(sido.equals("전체")&&sggu.equals("전체")&&!depart.equals("전체")){
-            return hospitalService.getHospitalList(pageNum, pageSize, depart);
+            return hospitalService.getHospitalList(depart);
         }
         if(!sido.equals("전체")&&sggu.equals("전체")&&!depart.equals("전체")){
-            return hospitalService.getHospitalListBySidoAndDepart(pageNum, pageSize, sido, depart);
+            return hospitalService.getHospitalListBySidoAndDepart(sido, depart);
         }
         if(!sido.equals("전체")&&!sggu.equals("전체")&&depart.equals("전체")){
-            return hospitalService.getHospitalListBySidoAndSggu(pageNum, pageSize, sido, sggu);
+            return hospitalService.getHospitalListBySidoAndSggu(sido, sggu);
         }
         if(!sido.equals("전체")&&sggu.equals("전체")&&depart.equals("전체")){
-            return hospitalService.getHospitalListBySido(pageNum, pageSize, sido);
+            return hospitalService.getHospitalListBySido(sido);
         }
 
 
-        JSONArray ja = hospitalService.getHospitalList(pageNum, pageSize, sido, sggu,depart);
+        JSONArray ja = hospitalService.getHospitalList(sido, sggu,depart);
         return ja;
     }
 
     @GetMapping("/getAllList")
     public JSONArray getHospitalList(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize")int pageSize){
-        return hospitalService.getHospitalList(pageNum,pageSize);
+        return hospitalService.getHospitalList();
     }
 }
 

@@ -10,17 +10,15 @@ public interface HospitalService {
 
     public void init(String jsonData);
 
-    public JSONArray getHospitalList(int pageNum, int pageSize);
+    public JSONArray getHospitalList();
 
     public JSONArray getHospitalList(String depart);
 
-    public JSONArray getHospitalList(int pageNum, int pageSize, String depart);
+    public JSONArray getHospitalListBySido(String sido);
 
-    public JSONArray getHospitalListBySido(int pageNum, int pageSize, String sido);
+    public JSONArray getHospitalListBySidoAndDepart(String sido,String depart);
 
-    public JSONArray getHospitalListBySidoAndDepart(int pageNum, int pageSize, String sido,String depart);
+    public JSONArray getHospitalListBySidoAndSggu(String sido,String sggu);
 
-    public JSONArray getHospitalListBySidoAndSggu(int pageNum, int pageSize, String sido,String sggu);
-
-    public JSONArray getHospitalList(int pageNuj, int pageSize,String sido, String sggu,String depart);
+    public JSONArray getHospitalList(String sido, String sggu,String depart);
 }

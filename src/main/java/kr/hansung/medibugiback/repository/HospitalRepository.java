@@ -18,12 +18,11 @@ public interface HospitalRepository extends JpaRepository<Hospital,Long> {
     List<Hospital> findByMediDepart(String depart);
     boolean existsByTelno(String tel);
 
-    Page<Hospital> findByAddrContaining(String addr, PageRequest pageRequest);
+    List<Hospital> findByAddrStartingWith(String addr);
 
-    Page<Hospital> findByAddrContainingAndMediDepart(String sido, String depart, PageRequest pageRequest);
+    List<Hospital> findByAddrStartingWithAndMediDepart(String sido, String depart);
 
-    Page<Hospital> findByAddrContainingAndAddrContaining(String sido,String sggu,PageRequest pageRequest);
+    List<Hospital> findByAddrStartingWithAndAddrContaining(String sido,String sggu);
 
-    Page<Hospital> findByAddrContainingAndAddrContainingAndMediDepart(String sido, String sggu, String depart, PageRequest pageRequest);
-    Page<Hospital> findByMediDepart(String depart, PageRequest pageRequest);
+    List<Hospital> findByAddrStartingWithAndAddrContainingAndMediDepart(String sido, String sggu, String depart);
 }
