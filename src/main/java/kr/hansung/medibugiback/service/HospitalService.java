@@ -8,17 +8,17 @@ import java.util.List;
 
 public interface HospitalService {
 
-    public void init(String jsonData);
+    public List<Hospital> getHospitalList();
 
-    public JSONArray getHospitalList();
+    public List<Hospital> getHospitalList(String depart);
 
-    public JSONArray getHospitalList(String depart);
+    public List<Hospital> getHospitalListBySido(String sido);
 
-    public JSONArray getHospitalListBySido(String sido);
+    public List<Hospital> getHospitalListBySidoAndDepart(String sido,String depart);
 
-    public JSONArray getHospitalListBySidoAndDepart(String sido,String depart);
+    public List<Hospital> getHospitalListBySidoAndSggu(String sido,String sggu);
 
-    public JSONArray getHospitalListBySidoAndSggu(String sido,String sggu);
+    public List<Hospital> getHospitalList(String sido, String sggu,String depart);
 
-    public JSONArray getHospitalList(String sido, String sggu,String depart);
+    public List<Hospital> getTest(String sido, String sggu, String depart);
 }

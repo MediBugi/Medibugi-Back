@@ -21,46 +21,17 @@ public class HospitalController {
     @Autowired
     private HospitalService hospitalService;
 
-    @GetMapping("/apitest")
-    public String callApiWithXml() {
-        StringBuilder result = new StringBuilder();
-        try {
-            String apiUrl = "https://apis.data.go.kr/B551182/hospInfoServicev2/getHospBasisList?" +
-                    "serviceKey=hRyDtWdl9ka1Ns9OkR3Mzi2rwq1QvxyA8wc%2B%2BQAyeHGF79OiC%2Bi2rUUvIkjmTaxFZFUEAlre%2FFepLG1Q540y3g%3D%3D"+
-                    "&numOfRows=5"+
-                    "&pageNO=0"+
-                    "&sidoCd=110000"+
-                    "&_type=json";
-            URL url = new URL(apiUrl);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
-
-            String returnLine;
-            while((returnLine = bufferedReader.readLine()) != null) {
-                result.append(returnLine).append("\n");
-            }
-            urlConnection.disconnect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        hospitalService.init(result.toString());
-
-        return result.toString();
-    }
 
     @GetMapping("/getHospitalList")
-    public JSONArray hospitalList(@RequestParam("depart")
+    public List<Hospital> hospitalList(@RequestParam("depart")
                                   String depart){
-      JSONArray ja = hospitalService.getHospitalList(depart);
 
-        return ja;
+
+        return hospitalService.getHospitalList(depart);
     }
 
     @GetMapping("/getHospitalListByLocation")
-    public JSONArray hospitalListByLocation(@RequestParam
+    public List<Hospital> hospitalListByLocation(@RequestParam
             ("sido")String sido, @RequestParam("sggu") String sggu, @RequestParam("depart")String depart){
         if(sido.equals("전체")&&sggu.equals("전체")&&depart.equals("전체")){
             return hospitalService.getHospitalList();
@@ -79,13 +50,19 @@ public class HospitalController {
         }
 
 
-        JSONArray ja = hospitalService.getHospitalList(sido, sggu,depart);
-        return ja;
+        // ja = hospitalService.getHospitalList(sido, sggu,depart);
+        return hospitalService.getHospitalList(sido, sggu, depart);
     }
 
     @GetMapping("/getAllList")
-    public JSONArray getHospitalList(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize")int pageSize){
+    public List<Hospital> getHospitalList(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize")int pageSize){
         return hospitalService.getHospitalList();
+    }
+
+    @GetMapping("/getTest")
+    public List<Hospital> getTest(@RequestParam("sido")String sido, @RequestParam("sggu") String sggu,
+                                  @RequestParam("depart")String depart){
+        return hospitalService.getHospitalList(sido, sggu, depart);
     }
 }
 

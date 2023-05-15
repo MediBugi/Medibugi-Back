@@ -63,6 +63,8 @@ public class FavoriteService {
             JSONObject jo = new JSONObject();
             jo.put("hospitalName", favoriteList.get(i).getHospital().getYadmNm());
             jo.put("code", favoriteList.get(i).getHospital().getCode());
+            jo.put("clCdNm", favoriteList.get(i).getHospital().getClCdNm());
+            jo.put("depart",favoriteList.get(i).getHospital().getMediDepart());
             jsonArray.add(jo);
         }
 
