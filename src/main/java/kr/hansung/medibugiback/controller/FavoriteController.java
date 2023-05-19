@@ -1,5 +1,6 @@
 package kr.hansung.medibugiback.controller;
 
+import kr.hansung.medibugiback.domain.Hospital;
 import kr.hansung.medibugiback.dto.FavoriteRequestDto;
 import kr.hansung.medibugiback.repository.FavoriteRepository;
 import kr.hansung.medibugiback.service.FavoriteService;
@@ -8,6 +9,8 @@ import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(value = "*",maxAge = 3600)
 @RestController
@@ -27,7 +30,7 @@ public class FavoriteController {
     }
 
     @GetMapping("/getFavoriteList")
-    public JSONArray getFavoriteList(@RequestParam("member_id")String member_id){
+    public List<Hospital> getFavoriteList(@RequestParam("member_id")String member_id){
         return favoriteService.getFavoriteList(member_id);
     }
 

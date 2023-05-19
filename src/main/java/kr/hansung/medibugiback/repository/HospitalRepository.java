@@ -22,9 +22,21 @@ public interface HospitalRepository extends JpaRepository<Hospital,Long> {
             "h.hospUrl, h.lunchNom, h.lunchSat, h.receipt_Sat, h.receipt_Week, " +
             "h.restDay, h.sgguCdNm, h.sidoCdNm, h.sunRestDay, h.telno, h.x, h.y, h.yadmNm, h.hoscnt " +
             "FROM Hospital h " +
-            "WHERE h.hoscnt = %hoscnt"+
+            "WHERE h.hoscnt = :hoscnt "+
             "GROUP BY h.code ", nativeQuery = true)
     Hospital findByHoscnt(Long hoscnt);
+
+    @Query(value = "SELECT h.code AS hospital_code, " +
+            "GROUP_CONCAT(DISTINCT h.mediDepart SEPARATOR ', ') AS mediDepart, " +
+            "h.addr, h.chFriEnd, h.chFriStart, h.chMonEnd, h.chMonStart, h.chSatEnd, h.chSatStart, " +
+            "h.chSunEnd, h.chSunStart, h.chThuEnd, h.chThuStart, h.chTueEnd, h.chTueStart, " +
+            "h.chWenEnd, h.chWenStart, h.clCdNm, h.code, h.drTotCnt, h.emdongNm, " +
+            "h.hospUrl, h.lunchNom, h.lunchSat, h.receipt_Sat, h.receipt_Week, " +
+            "h.restDay, h.sgguCdNm, h.sidoCdNm, h.sunRestDay, h.telno, h.x, h.y, h.yadmNm, h.hoscnt " +
+            "FROM Hospital h " +
+            "WHERE h.yadmNm = :yadmNm "+
+            "GROUP BY h.code ", nativeQuery = true)
+    Hospital findByYadmNm(String yadmNm);
     @Query(value = "SELECT h.code AS hospital_code, " +
             "GROUP_CONCAT(DISTINCT h.mediDepart SEPARATOR ', ') AS mediDepart, " +
             "h.addr, h.chFriEnd, h.chFriStart, h.chMonEnd, h.chMonStart, h.chSatEnd, h.chSatStart, " +

@@ -14,6 +14,7 @@ import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Member;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -50,25 +51,20 @@ public class FavoriteService {
     }
 
 
-    public JSONArray getFavoriteList(String member_id){
-
-        JSONArray jsonArray = new JSONArray();
-
+    public List<Hospital> getFavoriteList(String member_id){
+        List<Hospital> hospitalList = new ArrayList<>();
 
         MemberEntity member = memberRepo.findByMemberid(member_id);
 
         List<Favorite> favoriteList = faRepo.findByMember(member);
 
         for(int i=0;i<favoriteList.size();i++){
-            JSONObject jo = new JSONObject();
-            jo.put("hospitalName", favoriteList.get(i).getHospital().getYadmNm());
-            jo.put("code", favoriteList.get(i).getHospital().getCode());
-            jo.put("clCdNm", favoriteList.get(i).getHospital().getClCdNm());
-            jo.put("depart",favoriteList.get(i).getHospital().getMediDepart());
-            jsonArray.add(jo);
+            Hospital hospital = hosRepo.findByYadmNm(favoriteList.get(i).getHospital().getYadmNm());
+            System.out.println(hospital);
+            hospitalList.add(i,hospital);
         }
 
-        return jsonArray;
+        return hospitalList;
     }
 
 }
