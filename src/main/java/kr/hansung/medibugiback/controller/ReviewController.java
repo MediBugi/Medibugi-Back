@@ -19,7 +19,7 @@ public class ReviewController {
 
 
     @PostMapping("/add")
-    public boolean ReviewAdd(@RequestBody ReviewDto reviewDto, @RequestParam("memberid") String memberid, @RequestParam("hoscnt") Long hoscnt){
+    public boolean ReviewAdd(ReviewDto reviewDto, @RequestParam("memberid") String memberid, @RequestParam("hoscnt") Long hoscnt){
 
 
         return reviewService.addReview(reviewDto,memberid,hoscnt);

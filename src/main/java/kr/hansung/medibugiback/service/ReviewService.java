@@ -27,12 +27,15 @@ public class ReviewService {
     public boolean addReview(ReviewDto reviewDto, String memberid, Long hoscnt){
 
 
+
         MemberEntity member = memRepo.findByMemberid(memberid);
 
         Hospital hospital = hosRepo.findByHoscnt(hoscnt);
 
         Review review = new Review(member,hospital);
 
+        review.setContent(reviewDto.getContent());
+        review.setRating(reviewDto.getRating());
         reviewRepo.save(review);
 
         return true;
