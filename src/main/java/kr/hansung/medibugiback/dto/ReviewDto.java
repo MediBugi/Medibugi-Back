@@ -10,4 +10,13 @@ public class ReviewDto {
     private String content;
     private int rating;
 
+    private String memberid;
+
+    private Long hoscnt;
+
+    public ReviewDto(String content, int rating){
+        this.content=content;
+        this.rating=rating;
+    }
+
 }

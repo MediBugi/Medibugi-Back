@@ -10,6 +10,7 @@ import kr.hansung.medibugiback.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -50,11 +51,29 @@ public class ReviewService {
         return true;
     }
 
-    public List<Review> getReview(Long hoscnt){
+    public List<ReviewDto> getReview(Long hoscnt){
 
         Hospital hospital = hosRepo.findByHoscnt(hoscnt);
 
-        return reviewRepo.findByHospital(hospital);
+        List<Review> reviewList = reviewRepo.findByHospital(hospital);
+
+        List<ReviewDto> reviewDtos = new ArrayList<>();
+
+
+        for(int i=0;i<reviewList.size();i++){
+            String content = reviewList.get(i).getContent();
+            int rating = reviewList.get(i).getRating();
+            String memberid = reviewList.get(i).getMember().getMemberid();
+            Long hos = reviewList.get(i).getHospital().getHoscnt();
+
+            ReviewDto reviewDto = new ReviewDto(content,rating);
+            reviewDto.setMemberid(memberid);
+            reviewDto.setHoscnt(hos);
+
+            reviewDtos.add(reviewDto);
+        }
+
+        return reviewDtos;
     }
 
 
