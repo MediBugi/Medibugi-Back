@@ -20,5 +20,4 @@ public interface HospitalService {
 
     public List<Hospital> getHospitalList(String sido, String sggu,String depart);
 
-    public List<Hospital> getTest(String sido, String sggu, String depart);
 }

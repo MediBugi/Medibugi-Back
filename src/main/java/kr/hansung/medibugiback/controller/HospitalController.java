@@ -55,14 +55,9 @@ public class HospitalController {
     }
 
     @GetMapping("/getAllList")
-    public List<Hospital> getHospitalList(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize")int pageSize){
+    public List<Hospital> getHospitalList(){
         return hospitalService.getHospitalList();
     }
 
-    @GetMapping("/getTest")
-    public List<Hospital> getTest(@RequestParam("sido")String sido, @RequestParam("sggu") String sggu,
-                                  @RequestParam("depart")String depart){
-        return hospitalService.getHospitalList(sido, sggu, depart);
-    }
 }
 

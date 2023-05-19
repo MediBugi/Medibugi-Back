@@ -24,7 +24,7 @@ public class HospitalSaveServiceImpl implements HospitalService {
     @Override
     public List<Hospital> getHospitalList() {
 
-       return hosRepo.findMediDepartByYadmNm();
+       return hosRepo.findMediDepartByCode();
     }
     @Override
     public List<Hospital> getHospitalList(String depart){
@@ -73,11 +73,7 @@ public class HospitalSaveServiceImpl implements HospitalService {
         return hosRepo.findHospitalsByAddrAndMediDepart(sido, sggu, depart);
     }
 
-    @Override
-    public List<Hospital> getTest(String sido, String sggu, String depart) {
 
-        return hosRepo.findMediDepartByYadmNm();
-    }
 
 
 }

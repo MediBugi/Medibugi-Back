@@ -59,9 +59,9 @@ public class FavoriteService {
         List<Favorite> favoriteList = faRepo.findByMember(member);
 
         for(int i=0;i<favoriteList.size();i++){
-            Hospital hospital = hosRepo.findByYadmNm(favoriteList.get(i).getHospital().getYadmNm());
+            Hospital hospital = hosRepo.findHospitalCode(favoriteList.get(i).getHospital().getCode());
             System.out.println(hospital);
-            hospitalList.add(i,hospital);
+            hospitalList.add(hospital);
         }
 
         return hospitalList;

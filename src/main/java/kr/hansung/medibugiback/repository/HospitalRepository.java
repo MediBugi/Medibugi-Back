@@ -61,16 +61,16 @@ public interface HospitalRepository extends JpaRepository<Hospital,Long> {
             "GROUP BY h.code ", nativeQuery = true)
     List<Hospital> findHospitalsByAddr(String sido);
 
-    @Query(value = "select h.yadmNm," +
+    @Query(value = "select h.code AS hospital_code, " +
             "GROUP_CONCAT(distinct h.mediDepart SEPARATOR ', ') AS mediDepart," +
             "            h.addr, h.chFriEnd, h.chFriStart, h.chMonEnd, h.chMonStart, h.chSatEnd, h.chSatStart," +
-            "            h.chSunEnd, h.hoscnt ,h.chSunStart, h.chThuEnd, h.chThuStart, h.chTueEnd, h.chTueStart," +
+            "            h.chSunEnd, h.yadmNm,h.hoscnt ,h.chSunStart, h.chThuEnd, h.chThuStart, h.chTueEnd, h.chTueStart," +
             "            h.chWenEnd, h.chWenStart, h.clCdNm,  h.drTotCnt, h.emdongNm," +
             "            h.hospUrl, h.lunchNom, h.lunchSat, h.receipt_Sat, h.receipt_Week," +
             "            h.restDay, h.sgguCdNm, h.sidoCdNm, h.sunRestDay, h.telno, h.x, h.y, h.code"+
     "            FROM Hospital h " +
-            "            GROUP BY h.yadmNm", nativeQuery = true)
-    List<Hospital> findMediDepartByYadmNm(); // 모두 전체 골랐을때 쿼리
+            "            GROUP BY h.code", nativeQuery = true)
+    List<Hospital> findMediDepartByCode(); // 모두 전체 골랐을때 쿼리
     @Query(value = "SELECT h.code AS hospital_code, " +
             "GROUP_CONCAT(DISTINCT h.mediDepart SEPARATOR ', ') AS mediDepart, " +
             "h.addr, h.chFriEnd, h.chFriStart, h.chMonEnd, h.chMonStart, h.chSatEnd, h.chSatStart, " +
@@ -108,4 +108,15 @@ public interface HospitalRepository extends JpaRepository<Hospital,Long> {
             "HAVING GROUP_CONCAT(DISTINCT h.mediDepart SEPARATOR ', ') LIKE %:mediDepart%", nativeQuery = true)
     List<Hospital> findHospitalsByAddrAndMediDepart(String sido, String sggu, String mediDepart); // 모든 선택지를 다 골랐을때 쿼리
 
+    @Query(value = "SELECT h.code AS hospital_code, " +
+            "GROUP_CONCAT(DISTINCT h.mediDepart SEPARATOR ', ') AS mediDepart, " +
+            "h.addr, h.chFriEnd, h.chFriStart, h.chMonEnd, h.chMonStart, h.chSatEnd, h.chSatStart, " +
+            "h.chSunEnd, h.chSunStart, h.chThuEnd, h.chThuStart, h.chTueEnd, h.chTueStart, " +
+            "h.chWenEnd, h.chWenStart, h.clCdNm, h.code, h.drTotCnt, h.emdongNm, " +
+            "h.hospUrl, h.lunchNom, h.lunchSat, h.receipt_Sat, h.receipt_Week, " +
+            "h.restDay, h.sgguCdNm, h.sidoCdNm, h.sunRestDay, h.telno, h.x, h.y, h.yadmNm, h.hoscnt " +
+            "FROM Hospital h " +
+            "WHERE h.code = :code "+
+            "GROUP BY h.code ", nativeQuery = true)
+    Hospital findHospitalCode(String code);
 }
