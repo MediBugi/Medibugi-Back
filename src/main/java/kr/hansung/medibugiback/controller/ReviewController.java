@@ -26,9 +26,9 @@ public class ReviewController {
     }
 
     @PostMapping("/delete")
-    public boolean ReviewDelete(@RequestBody ReviewDto reviewDto, @RequestParam("memberid") String memberid, @RequestParam("hoscnt") Long hoscnt){
+    public boolean ReviewDelete(@RequestParam("memberid") String memberid, @RequestParam("hoscnt") Long hoscnt){
 
-        return reviewService.deleteReview(reviewDto,memberid,hoscnt);
+        return reviewService.deleteReview(memberid,hoscnt);
     }
 
     @GetMapping("/getReview")

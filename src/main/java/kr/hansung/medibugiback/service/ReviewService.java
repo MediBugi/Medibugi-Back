@@ -37,7 +37,7 @@ public class ReviewService {
         return true;
     }
 
-    public boolean deleteReview(ReviewDto reviewDto, String memberid, Long hoscnt){
+    public boolean deleteReview(String memberid, Long hoscnt){
 
         MemberEntity member = memRepo.findByMemberid(memberid);
 
