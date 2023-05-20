@@ -22,6 +22,8 @@ public class Review {
 
     private int rating;
 
+    private String writeTime;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id")
     private MemberEntity member;

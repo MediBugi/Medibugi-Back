@@ -11,5 +11,6 @@ public interface FavoriteRepository extends JpaRepository<Favorite,Integer> {
 
     Favorite findByHospitalAndMember(Hospital hospital, MemberEntity member);
 
+    Favorite findByHospital(Hospital hospital);
     List<Favorite> findByMember(MemberEntity member);
 }

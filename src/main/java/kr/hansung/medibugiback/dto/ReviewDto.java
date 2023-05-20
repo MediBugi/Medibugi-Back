@@ -10,6 +10,9 @@ public class ReviewDto {
     private String content;
     private int rating;
 
+    private int reviewCnt;
+    private String writeTime;
+
     private String memberid;
 
     private Long hoscnt;

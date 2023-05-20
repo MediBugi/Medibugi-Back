@@ -31,9 +31,15 @@ public class FavoriteService {
         Hospital hospital = hosRepo.findByHoscnt(hoscnt);
         MemberEntity member = memberRepo.findByMemberid(member_id);
 
-        Favorite favorite = new Favorite(hospital,member);
-        faRepo.save(favorite);
-        return true;
+        if((faRepo.findByHospital(hospital)==null)){
+            Favorite favorite = new Favorite(hospital,member);
+            faRepo.save(favorite);
+
+            return true;
+        }
+
+
+        return false;
     }
 
     public boolean deleteFavorite(FavoriteRequestDto favoriteRequestDto){

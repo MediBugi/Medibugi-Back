@@ -15,4 +15,6 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     Review findByHospitalAndMember(Hospital hospital, MemberEntity member);
 
     List<Review> findByHospital(Hospital hospital);
+
+    Review findByReviewCnt(int reviewCnt);
 }

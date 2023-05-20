@@ -19,16 +19,16 @@ public class ReviewController {
 
 
     @PostMapping("/add")
-    public boolean ReviewAdd(ReviewDto reviewDto, @RequestParam("memberid") String memberid, @RequestParam("hoscnt") Long hoscnt){
+    public String ReviewAdd(ReviewDto reviewDto, @RequestParam("memberid") String memberid, @RequestParam("hoscnt") Long hoscnt){
 
 
         return reviewService.addReview(reviewDto,memberid,hoscnt);
     }
 
     @PostMapping("/delete")
-    public boolean ReviewDelete(@RequestParam("memberid") String memberid, @RequestParam("hoscnt") Long hoscnt){
+    public boolean ReviewDelete(@RequestParam("memberid") String memberid, @RequestParam("reviewCnt") int reviewCnt){
 
-        return reviewService.deleteReview(memberid,hoscnt);
+        return reviewService.deleteReview(memberid,reviewCnt);
     }
 
     @GetMapping("/getReview")
