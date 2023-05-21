@@ -24,7 +24,7 @@ public class ReviewService {
     private final MemberRepository memRepo;
 
 
-    public String addReview(ReviewDto reviewDto, String memberid, Long hoscnt){
+    public List<ReviewDto> addReview(ReviewDto reviewDto, String memberid, Long hoscnt){
 
 
 
@@ -33,12 +33,22 @@ public class ReviewService {
         Hospital hospital = hosRepo.findByHoscnt(hoscnt);
 
         Review review = new Review(member,hospital);
+        List<ReviewDto> reviewDtos = new ArrayList<>();
 
         review.setContent(reviewDto.getContent());
         review.setRating(reviewDto.getRating());
+        review.setWriteTime(reviewDto.getWriteTime());
         reviewRepo.save(review);
 
-        return review.toString();
+        ReviewDto reviewDtoo = new ReviewDto(reviewDto.getContent(),reviewDto.getRating());
+        reviewDtoo.setMemberid(memberid);
+        reviewDtoo.setHoscnt(hoscnt);
+        reviewDtoo.setReviewCnt(review.getReviewCnt());
+        reviewDtoo.setWriteTime(reviewDto.getWriteTime());
+        reviewDtos.add(reviewDtoo);
+
+
+        return reviewDtos;
     }
 
     public boolean deleteReview(String memberid, int reviewCnt){
@@ -73,12 +83,15 @@ public class ReviewService {
             String memberid = reviewList.get(i).getMember().getMemberid();
             Long hos = reviewList.get(i).getHospital().getHoscnt();
             int reviewCnt = reviewList.get(i).getReviewCnt();
+            String writeTime = reviewList.get(i).getWriteTime();
 
             ReviewDto reviewDto = new ReviewDto(content,rating);
             reviewDto.setMemberid(memberid);
             reviewDto.setHoscnt(hos);
             reviewDto.setReviewCnt(reviewCnt);
+            reviewDto.setWriteTime(writeTime);
             reviewDtos.add(reviewDto);
+
         }
 
         return reviewDtos;
