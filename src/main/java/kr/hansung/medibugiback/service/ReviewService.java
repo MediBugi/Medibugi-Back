@@ -24,7 +24,7 @@ public class ReviewService {
     private final MemberRepository memRepo;
 
 
-    public List<ReviewDto> addReview(ReviewDto reviewDto, String memberid, Long hoscnt){
+    public ReviewDto addReview(ReviewDto reviewDto, String memberid, Long hoscnt){
 
 
 
@@ -33,7 +33,7 @@ public class ReviewService {
         Hospital hospital = hosRepo.findByHoscnt(hoscnt);
 
         Review review = new Review(member,hospital);
-        List<ReviewDto> reviewDtos = new ArrayList<>();
+
 
         review.setContent(reviewDto.getContent());
         review.setRating(reviewDto.getRating());
@@ -45,10 +45,10 @@ public class ReviewService {
         reviewDtoo.setHoscnt(hoscnt);
         reviewDtoo.setReviewCnt(review.getReviewCnt());
         reviewDtoo.setWriteTime(reviewDto.getWriteTime());
-        reviewDtos.add(reviewDtoo);
 
 
-        return reviewDtos;
+
+        return reviewDtoo;
     }
 
     public boolean deleteReview(String memberid, int reviewCnt){
