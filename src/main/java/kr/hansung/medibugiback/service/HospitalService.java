@@ -20,4 +20,6 @@ public interface HospitalService {
 
     public List<Hospital> getHospitalList(String sido, String sggu,String depart);
 
+    public List<Hospital> addtimeinfo();
+
 }

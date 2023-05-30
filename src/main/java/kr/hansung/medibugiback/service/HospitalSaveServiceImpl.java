@@ -183,7 +183,30 @@ public class HospitalSaveServiceImpl implements HospitalService {
         return hospitalPage;
     }
 
+    @Override
+    public List<Hospital> addtimeinfo(){
+        List<Hospital> hospitalList = hosRepo.findByAddrStartingWithAndAddrContaining("서울특별시","성북구");
+        List<Hospital> resultList = new ArrayList<>();
+        for(Hospital hospital : hospitalList){
+            hospital.setChMonStart("900");
+            hospital.setChMonEnd("1800");
+            hospital.setChTueStart("900");
+            hospital.setChTueEnd("1800");
+            hospital.setChWenStart("900");
+            hospital.setChWenEnd("1800");
+            hospital.setChThuStart("900");
+            hospital.setChThuEnd("1800");
+            hospital.setChFriStart("900");
+            hospital.setChFriEnd("1800");
 
+            resultList.add(hospital);
+            hosRepo.save(hospital);
+        }
+
+
+
+        return resultList;
+    }
 
 
 }

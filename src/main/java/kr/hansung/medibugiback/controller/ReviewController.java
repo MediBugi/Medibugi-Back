@@ -38,4 +38,8 @@ public class ReviewController {
     }
 
 
+    @GetMapping("/testreview")
+    public List<Review> addreivewtest(){
+        return reviewService.addreviewTest();
+    }
 }

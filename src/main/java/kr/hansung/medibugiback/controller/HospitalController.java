@@ -59,5 +59,10 @@ public class HospitalController {
         return hospitalService.getHospitalList();
     }
 
+    @GetMapping("/timetest")
+    public List<Hospital> timetest(){
+        return hospitalService.addtimeinfo();
+    }
+
 }
 

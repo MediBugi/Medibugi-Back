@@ -119,4 +119,7 @@ public interface HospitalRepository extends JpaRepository<Hospital,Long> {
             "WHERE h.code = :code "+
             "GROUP BY h.code ", nativeQuery = true)
     Hospital findHospitalCode(String code);
+
+
+    List<Hospital> findByChMonStartIsNull();
 }

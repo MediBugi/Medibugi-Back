@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Random;
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
@@ -97,5 +97,36 @@ public class ReviewService {
         return reviewDtos;
     }
 
+    public List<Review> addreviewTest(){
+        List<Review> reviewList = new ArrayList<>();
+        List<Hospital> hospitalList = hosRepo.findByAddrStartingWithAndAddrContaining("서울특별시","성북구");
+        MemberEntity member = memRepo.findByMemberid("hansung1");
+
+        Random random = new Random();
+        long seed = System.currentTimeMillis();
+        random.setSeed(seed);
+        String[] testreview = new String[5];
+
+        testreview[0] = "의사 선생님이 친절해요";
+        testreview[1] = "병원이 청결해요";
+        testreview[2] = "다른 곳보다 병원비가 비싸요";
+        testreview[3] = "의사 선생님이 불친절해요";
+        testreview[4] = "병원 상태가 청결하지 못해요";
+        
+        for(Hospital hospital : hospitalList){
+            Review review = new Review(member,hospital);
+            Long time = System.currentTimeMillis();
+            String timestr = time+" ";
+            int rating = random.nextInt(6);
+            int i = random.nextInt(5);
+            review.setRating(rating);
+            review.setContent(testreview[i]);
+            review.setWriteTime(timestr);
+
+            reviewList.add(review);
+            reviewRepo.save(review);
+        }
+        return reviewList;
+    }
 
 }
