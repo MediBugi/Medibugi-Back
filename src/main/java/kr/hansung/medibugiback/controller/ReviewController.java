@@ -32,9 +32,9 @@ public class ReviewController {
     }
 
     @GetMapping("/getReview")
-    public List<ReviewDto> getReviewList(@RequestParam("hoscnt") Long hoscnt){
+    public List<ReviewDto> getReviewList(@RequestParam("code") String code){
 
-        return reviewService.getReview(hoscnt);
+        return reviewService.getReview(code);
     }
 
 

@@ -68,9 +68,9 @@ public class ReviewService {
         return false;
     }
 
-    public List<ReviewDto> getReview(Long hoscnt){
+    public List<ReviewDto> getReview(String code){
 
-        Hospital hospital = hosRepo.findByHoscnt(hoscnt);
+        Hospital hospital = hosRepo.findHospitalCode(code);
 
         List<Review> reviewList = reviewRepo.findByHospital(hospital);
 
