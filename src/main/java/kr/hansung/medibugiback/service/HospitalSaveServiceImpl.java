@@ -1,7 +1,10 @@
 package kr.hansung.medibugiback.service;
 
 import kr.hansung.medibugiback.domain.Hospital;
+import kr.hansung.medibugiback.domain.Review;
+import kr.hansung.medibugiback.dto.HospitalDto;
 import kr.hansung.medibugiback.repository.HospitalRepository;
+import kr.hansung.medibugiback.repository.ReviewRepository;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,166 +24,897 @@ public class HospitalSaveServiceImpl implements HospitalService {
     @Autowired
     HospitalRepository hosRepo;
 
-    @Override
-    public List<Hospital> getHospitalList() {
+    @Autowired
+    ReviewRepository reviewRepo;
 
-       return hosRepo.findMediDepartByCode();
+    @Override
+    public List<HospitalDto> getHospitalList() {
+
+       List<Hospital> hospitalList = hosRepo.findMediDepartByCode();
+
+       List<Review> reviewList = reviewRepo.findAll();
+
+       List<HospitalDto> hospitalDtos = new ArrayList<>();
+
+        for (Hospital hospital : hospitalList) {
+            float rating = 0;
+            int cnt = 0;
+            for (Review review : reviewList) {
+                if (hospital.getCode().equals(review.getHospital().getCode())) {
+                    rating += review.getRating();
+                    cnt++;
+                }
+            }
+            HospitalDto hospitalDto = new HospitalDto(hospital);
+            if(rating == 0){
+                hospitalDto.setRating(0);
+            }
+            else
+                hospitalDto.setRating(rating / cnt);
+            hospitalDtos.add(hospitalDto);
+        }
+
+       return hospitalDtos;
     }
     @Override
-    public List<Hospital> getHospitalList(String depart){
+    public List<HospitalDto> getHospitalList(String depart){
 
         List<Hospital> hospitalPage = hosRepo.findByMediDepart(depart);
 
+        List<Review> reviewList = reviewRepo.findAll();
+
+        List<HospitalDto> hospitalDtos = new ArrayList<>();
+
         List<Hospital> resultList = new ArrayList<>();
         if(depart.equals("내과")){
             for (Hospital hospital : hospitalPage) {
+                float rating = 0;
+                int cnt = 0;
                 if ((hospital.getMediDepart().contains("한방내과")) || (hospital.getMediDepart().contains("구강내과"))) {
                     continue;
                 }
-                resultList.add(hospital);
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
             }
-            return resultList;
+            return hospitalDtos;
         }
         else if(depart.equals("외과")){
             for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
                 if((hospital.getMediDepart().contains("정형외과"))||(hospital.getMediDepart().contains("신경외과"))||(hospital.getMediDepart().contains("구강악안면외과"))||(hospital.getMediDepart().contains("성형외과"))||(hospital.getMediDepart().contains("심장혈관흉부외과"))||(hospital.getMediDepart().contains("흉부외과"))){
                     continue;
                 }
-                resultList.add(hospital);
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
             }
-            return resultList;
+            return hospitalDtos;
         }
         else if(depart.equals("피부과")){
             for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
                 if((hospital.getMediDepart().equals("한방안·이비인후·피부과"))||(hospital.getMediDepart().contains("한방안이비인후피부과"))){
                     continue;
                 }
-                resultList.add(hospital);
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
             }
-            return resultList;
+            return hospitalDtos;
         }
         else if(depart.equals("치과")){
             for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
                 if((hospital.getMediDepart().contains("치과보철과"))||(hospital.getMediDepart().contains("치과보존과"))||(hospital.getMediDepart().contains("소아치과"))||(hospital.getMediDepart().contains("치과교정과"))||(hospital.getMediDepart().contains("예방치과"))){
                     continue;
                 }
-                resultList.add(hospital);
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
             }
-            return resultList;
+            return hospitalDtos;
         }
 
-        return hospitalPage;
+        for (Hospital hospital : hospitalPage) {
+            float rating = 0;
+            int cnt = 0;
+            for (Review review : reviewList) {
+                if (hospital.getCode().equals(review.getHospital().getCode())) {
+                    rating += review.getRating();
+                    cnt++;
+                }
+            }
+            HospitalDto hospitalDto = new HospitalDto(hospital);
+            if(rating == 0){
+                hospitalDto.setRating(0);
+            }
+            else
+                hospitalDto.setRating(rating / cnt);
+            hospitalDtos.add(hospitalDto);
+        }
+
+        return hospitalDtos;
     }
 
     @Override
-    public List<Hospital> getHospitalListBySido(String sido) {
+    public List<HospitalDto> getHospitalListBySido(String sido) {
 
-        List<Hospital> hospitalPage = hosRepo.findHospitalsByAddr(sido);
+        List<Hospital> hospitalList = hosRepo.findHospitalsByAddr(sido);
 
-        return hospitalPage;
+        List<Review> reviewList = reviewRepo.findAll();
+
+        List<HospitalDto> hospitalDtos = new ArrayList<>();
+
+        for (Hospital hospital : hospitalList) {
+            float rating = 0;
+            int cnt = 0;
+            for (Review review : reviewList) {
+                if (hospital.getCode().equals(review.getHospital().getCode())) {
+                    rating += review.getRating();
+                    cnt++;
+                }
+            }
+            HospitalDto hospitalDto = new HospitalDto(hospital);
+            if(rating == 0){
+                hospitalDto.setRating(0);
+            }
+            else
+                hospitalDto.setRating(rating / cnt);
+            hospitalDtos.add(hospitalDto);
+        }
+
+        return hospitalDtos;
     }
 
     @Override
-    public List<Hospital> getHospitalListBySidoAndDepart(String sido, String depart) {
+    public List<HospitalDto> getHospitalListBySidoAndDepart(String sido, String depart) {
 
         List<Hospital> hospitalPage = hosRepo.findByAddrStartingWithAndMediDepart(sido,depart);
 
+        List<Review> reviewList = reviewRepo.findAll();
+
+        List<HospitalDto> hospitalDtos = new ArrayList<>();
+
         List<Hospital> resultList = new ArrayList<>();
         if(depart.equals("내과")){
             for (Hospital hospital : hospitalPage) {
+                float rating = 0;
+                int cnt = 0;
                 if ((hospital.getMediDepart().contains("한방내과")) || (hospital.getMediDepart().contains("구강내과"))) {
                     continue;
                 }
-                resultList.add(hospital);
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
             }
-            return resultList;
+            return hospitalDtos;
         }
         else if(depart.equals("외과")){
             for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
                 if((hospital.getMediDepart().contains("정형외과"))||(hospital.getMediDepart().contains("신경외과"))||(hospital.getMediDepart().contains("구강악안면외과"))||(hospital.getMediDepart().contains("성형외과"))||(hospital.getMediDepart().contains("심장혈관흉부외과"))||(hospital.getMediDepart().contains("흉부외과"))){
                     continue;
                 }
-                resultList.add(hospital);
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
             }
-            return resultList;
+            return hospitalDtos;
         }
         else if(depart.equals("피부과")){
             for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
                 if((hospital.getMediDepart().equals("한방안·이비인후·피부과"))||(hospital.getMediDepart().contains("한방안이비인후피부과"))){
                     continue;
                 }
-                resultList.add(hospital);
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
             }
-            return resultList;
+            return hospitalDtos;
         }
         else if(depart.equals("치과")){
             for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
                 if((hospital.getMediDepart().contains("치과보철과"))||(hospital.getMediDepart().contains("치과보존과"))||(hospital.getMediDepart().contains("소아치과"))||(hospital.getMediDepart().contains("치과교정과"))||(hospital.getMediDepart().contains("예방치과"))){
                     continue;
                 }
-                resultList.add(hospital);
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
             }
-            return resultList;
+            return hospitalDtos;
         }
 
-        return hospitalPage;
+        for (Hospital hospital : hospitalPage) {
+            float rating = 0;
+            int cnt = 0;
+            for (Review review : reviewList) {
+                if (hospital.getCode().equals(review.getHospital().getCode())) {
+                    rating += review.getRating();
+                    cnt++;
+                }
+            }
+            HospitalDto hospitalDto = new HospitalDto(hospital);
+            if(rating == 0){
+                hospitalDto.setRating(0);
+            }
+            else
+                hospitalDto.setRating(rating / cnt);
+            hospitalDtos.add(hospitalDto);
+        }
+
+        return hospitalDtos;
     }
 
     @Override
-    public List<Hospital> getHospitalListBySidoAndSggu(String sido, String sggu) {
-
-
+    public List<HospitalDto> getHospitalListBySidoAndSggu(String sido, String sggu) {
 
         List<Hospital> hospitalPage = hosRepo.findByAddrStartingWithAndAddrContaining(sido,sggu);
 
+        List<Review> reviewList = reviewRepo.findAll();
 
+        List<HospitalDto> hospitalDtos = new ArrayList<>();
 
-        return hospitalPage;
+        for (Hospital hospital : hospitalPage) {
+            float rating = 0;
+            int cnt = 0;
+            for (Review review : reviewList) {
+                if (hospital.getCode().equals(review.getHospital().getCode())) {
+                    rating += review.getRating();
+                    cnt++;
+                }
+            }
+            HospitalDto hospitalDto = new HospitalDto(hospital);
+            if(rating == 0){
+                hospitalDto.setRating(0);
+            }
+            else
+                hospitalDto.setRating(rating / cnt);
+            hospitalDtos.add(hospitalDto);
+        }
+
+        return hospitalDtos;
     }
 
     @Override
-    public List<Hospital> getHospitalList(String sido, String sggu,String depart) {
+    public List<HospitalDto> getHospitalList(String sido, String sggu,String depart) {
 
         List<Hospital> hospitalPage = hosRepo.findHospitalsByAddrAndMediDepart(sido, sggu, depart);
+        List<Review> reviewList = reviewRepo.findAll();
+
+        List<HospitalDto> hospitalDtos = new ArrayList<>();
+
         List<Hospital> resultList = new ArrayList<>();
         if(depart.equals("내과")){
             for (Hospital hospital : hospitalPage) {
+                float rating = 0;
+                int cnt = 0;
                 if ((hospital.getMediDepart().contains("한방내과")) || (hospital.getMediDepart().contains("구강내과"))) {
                     continue;
                 }
-                resultList.add(hospital);
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
             }
-            return resultList;
+            return hospitalDtos;
         }
         else if(depart.equals("외과")){
             for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
                 if((hospital.getMediDepart().contains("정형외과"))||(hospital.getMediDepart().contains("신경외과"))||(hospital.getMediDepart().contains("구강악안면외과"))||(hospital.getMediDepart().contains("성형외과"))||(hospital.getMediDepart().contains("심장혈관흉부외과"))||(hospital.getMediDepart().contains("흉부외과"))){
                     continue;
                 }
-                resultList.add(hospital);
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
             }
-            return resultList;
+            return hospitalDtos;
         }
         else if(depart.equals("피부과")){
             for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
                 if((hospital.getMediDepart().equals("한방안·이비인후·피부과"))||(hospital.getMediDepart().contains("한방안이비인후피부과"))){
                     continue;
                 }
-                resultList.add(hospital);
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
             }
-            return resultList;
+            return hospitalDtos;
         }
         else if(depart.equals("치과")){
             for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
                 if((hospital.getMediDepart().contains("치과보철과"))||(hospital.getMediDepart().contains("치과보존과"))||(hospital.getMediDepart().contains("소아치과"))||(hospital.getMediDepart().contains("치과교정과"))||(hospital.getMediDepart().contains("예방치과"))){
                     continue;
                 }
-                resultList.add(hospital);
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
             }
-            return resultList;
+            return hospitalDtos;
         }
 
-        return hospitalPage;
+        for (Hospital hospital : hospitalPage) {
+            float rating = 0;
+            int cnt = 0;
+            for (Review review : reviewList) {
+                if (hospital.getCode().equals(review.getHospital().getCode())) {
+                    rating += review.getRating();
+                    cnt++;
+                }
+            }
+            HospitalDto hospitalDto = new HospitalDto(hospital);
+            if(rating == 0){
+                hospitalDto.setRating(0);
+            }
+            else
+                hospitalDto.setRating(rating / cnt);
+            hospitalDtos.add(hospitalDto);
+        }
+
+        return hospitalDtos;
+    }
+
+    @Override
+    public List<HospitalDto> getHospitalListAndName(String depart, String name) {
+
+        List<Hospital> hospitalPage = hosRepo.findByMediDepartAndName(depart,name);
+
+        List<Review> reviewList = reviewRepo.findAll();
+
+        List<HospitalDto> hospitalDtos = new ArrayList<>();
+
+        List<Hospital> resultList = new ArrayList<>();
+        if(depart.equals("내과")){
+            for (Hospital hospital : hospitalPage) {
+                float rating = 0;
+                int cnt = 0;
+                if ((hospital.getMediDepart().contains("한방내과")) || (hospital.getMediDepart().contains("구강내과"))) {
+                    continue;
+                }
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
+            }
+            return hospitalDtos;
+        }
+        else if(depart.equals("외과")){
+            for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
+                if((hospital.getMediDepart().contains("정형외과"))||(hospital.getMediDepart().contains("신경외과"))||(hospital.getMediDepart().contains("구강악안면외과"))||(hospital.getMediDepart().contains("성형외과"))||(hospital.getMediDepart().contains("심장혈관흉부외과"))||(hospital.getMediDepart().contains("흉부외과"))){
+                    continue;
+                }
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
+            }
+            return hospitalDtos;
+        }
+        else if(depart.equals("피부과")){
+            for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
+                if((hospital.getMediDepart().equals("한방안·이비인후·피부과"))||(hospital.getMediDepart().contains("한방안이비인후피부과"))){
+                    continue;
+                }
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
+            }
+            return hospitalDtos;
+        }
+        else if(depart.equals("치과")){
+            for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
+                if((hospital.getMediDepart().contains("치과보철과"))||(hospital.getMediDepart().contains("치과보존과"))||(hospital.getMediDepart().contains("소아치과"))||(hospital.getMediDepart().contains("치과교정과"))||(hospital.getMediDepart().contains("예방치과"))){
+                    continue;
+                }
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
+            }
+            return hospitalDtos;
+        }
+
+        for (Hospital hospital : hospitalPage) {
+            float rating = 0;
+            int cnt = 0;
+            for (Review review : reviewList) {
+                if (hospital.getCode().equals(review.getHospital().getCode())) {
+                    rating += review.getRating();
+                    cnt++;
+                }
+            }
+            HospitalDto hospitalDto = new HospitalDto(hospital);
+            if(rating == 0){
+                hospitalDto.setRating(0);
+            }
+            else
+                hospitalDto.setRating(rating / cnt);
+            hospitalDtos.add(hospitalDto);
+        }
+
+        return hospitalDtos;
+    }
+
+    @Override
+    public List<HospitalDto> getHospitalListBySidoAndName(String sido, String name) {
+
+        List<Hospital> hospitalList = hosRepo.findBysidoAndName(sido, name);
+
+        List<Review> reviewList = reviewRepo.findAll();
+
+        List<HospitalDto> hospitalDtos = new ArrayList<>();
+
+        for (Hospital hospital : hospitalList) {
+            float rating = 0;
+            int cnt = 0;
+            for (Review review : reviewList) {
+                if (hospital.getCode().equals(review.getHospital().getCode())) {
+                    rating += review.getRating();
+                    cnt++;
+                }
+            }
+            HospitalDto hospitalDto = new HospitalDto(hospital);
+            if(rating == 0){
+                hospitalDto.setRating(0);
+            }
+            else
+                hospitalDto.setRating(rating / cnt);
+            hospitalDtos.add(hospitalDto);
+        }
+
+        return hospitalDtos;
+    }
+
+    @Override
+    public List<HospitalDto> getHospitalListBySidoAndDepartAndName(String sido, String depart, String name) {
+
+        List<Hospital> hospitalPage = hosRepo.findBySidoAndMediDepartAndName(sido,depart,name);
+
+        List<Review> reviewList = reviewRepo.findAll();
+
+        List<HospitalDto> hospitalDtos = new ArrayList<>();
+
+        List<Hospital> resultList = new ArrayList<>();
+        if(depart.equals("내과")){
+            for (Hospital hospital : hospitalPage) {
+                float rating = 0;
+                int cnt = 0;
+                if ((hospital.getMediDepart().contains("한방내과")) || (hospital.getMediDepart().contains("구강내과"))) {
+                    continue;
+                }
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
+            }
+            return hospitalDtos;
+        }
+        else if(depart.equals("외과")){
+            for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
+                if((hospital.getMediDepart().contains("정형외과"))||(hospital.getMediDepart().contains("신경외과"))||(hospital.getMediDepart().contains("구강악안면외과"))||(hospital.getMediDepart().contains("성형외과"))||(hospital.getMediDepart().contains("심장혈관흉부외과"))||(hospital.getMediDepart().contains("흉부외과"))){
+                    continue;
+                }
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
+            }
+            return hospitalDtos;
+        }
+        else if(depart.equals("피부과")){
+            for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
+                if((hospital.getMediDepart().equals("한방안·이비인후·피부과"))||(hospital.getMediDepart().contains("한방안이비인후피부과"))){
+                    continue;
+                }
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
+            }
+            return hospitalDtos;
+        }
+        else if(depart.equals("치과")){
+            for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
+                if((hospital.getMediDepart().contains("치과보철과"))||(hospital.getMediDepart().contains("치과보존과"))||(hospital.getMediDepart().contains("소아치과"))||(hospital.getMediDepart().contains("치과교정과"))||(hospital.getMediDepart().contains("예방치과"))){
+                    continue;
+                }
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
+            }
+            return hospitalDtos;
+        }
+
+        for (Hospital hospital : hospitalPage) {
+            float rating = 0;
+            int cnt = 0;
+            for (Review review : reviewList) {
+                if (hospital.getCode().equals(review.getHospital().getCode())) {
+                    rating += review.getRating();
+                    cnt++;
+                }
+            }
+            HospitalDto hospitalDto = new HospitalDto(hospital);
+            if(rating == 0){
+                hospitalDto.setRating(0);
+            }
+            else
+                hospitalDto.setRating(rating / cnt);
+            hospitalDtos.add(hospitalDto);
+        }
+
+        return hospitalDtos;
+    }
+
+    @Override
+    public List<HospitalDto> getHospitalListBySidoAndSgguAndName(String sido, String sggu, String name) {
+
+        List<Hospital> hospitalPage = hosRepo.findByAddrAndName(sido, sggu, name);
+        List<Review> reviewList = reviewRepo.findAll();
+
+        List<HospitalDto> hospitalDtos = new ArrayList<>();
+
+        for (Hospital hospital : hospitalPage) {
+            float rating = 0;
+            int cnt = 0;
+            for (Review review : reviewList) {
+                if (hospital.getCode().equals(review.getHospital().getCode())) {
+                    rating += review.getRating();
+                    cnt++;
+                }
+            }
+            HospitalDto hospitalDto = new HospitalDto(hospital);
+            if(rating == 0){
+                hospitalDto.setRating(0);
+            }
+            else
+                hospitalDto.setRating(rating / cnt);
+            hospitalDtos.add(hospitalDto);
+        }
+
+        return hospitalDtos;
+    }
+
+    @Override
+    public List<HospitalDto> getHospitalListAndName(String sido, String sggu, String depart, String name) {
+
+        List<Hospital> hospitalPage = hosRepo.findbyAddrAndMediDepartAndName(sido, sggu, depart, name);
+        List<Review> reviewList = reviewRepo.findAll();
+
+        List<HospitalDto> hospitalDtos = new ArrayList<>();
+
+        List<Hospital> resultList = new ArrayList<>();
+        if(depart.equals("내과")){
+            for (Hospital hospital : hospitalPage) {
+                float rating = 0;
+                int cnt = 0;
+                if ((hospital.getMediDepart().contains("한방내과")) || (hospital.getMediDepart().contains("구강내과"))) {
+                    continue;
+                }
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
+            }
+            return hospitalDtos;
+        }
+        else if(depart.equals("외과")){
+            for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
+                if((hospital.getMediDepart().contains("정형외과"))||(hospital.getMediDepart().contains("신경외과"))||(hospital.getMediDepart().contains("구강악안면외과"))||(hospital.getMediDepart().contains("성형외과"))||(hospital.getMediDepart().contains("심장혈관흉부외과"))||(hospital.getMediDepart().contains("흉부외과"))){
+                    continue;
+                }
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
+            }
+            return hospitalDtos;
+        }
+        else if(depart.equals("피부과")){
+            for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
+                if((hospital.getMediDepart().equals("한방안·이비인후·피부과"))||(hospital.getMediDepart().contains("한방안이비인후피부과"))){
+                    continue;
+                }
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
+            }
+            return hospitalDtos;
+        }
+        else if(depart.equals("치과")){
+            for(Hospital hospital : hospitalPage){
+                float rating = 0;
+                int cnt = 0;
+                if((hospital.getMediDepart().contains("치과보철과"))||(hospital.getMediDepart().contains("치과보존과"))||(hospital.getMediDepart().contains("소아치과"))||(hospital.getMediDepart().contains("치과교정과"))||(hospital.getMediDepart().contains("예방치과"))){
+                    continue;
+                }
+                for(Review review : reviewList){
+                    if(hospital.getCode().equals(review.getHospital().getCode())){
+                        rating+=review.getRating();
+                        cnt++;
+                    }
+                }
+                HospitalDto hospitalDto = new HospitalDto(hospital);
+                if(rating == 0){
+                    hospitalDto.setRating(0);
+                }
+                else
+                    hospitalDto.setRating(rating / cnt);
+                hospitalDtos.add(hospitalDto);
+            }
+            return hospitalDtos;
+        }
+
+        for (Hospital hospital : hospitalPage) {
+            float rating = 0;
+            int cnt = 0;
+            for (Review review : reviewList) {
+                if (hospital.getCode().equals(review.getHospital().getCode())) {
+                    rating += review.getRating();
+                    cnt++;
+                }
+            }
+            HospitalDto hospitalDto = new HospitalDto(hospital);
+            if(rating == 0){
+                hospitalDto.setRating(0);
+            }
+            else
+                hospitalDto.setRating(rating / cnt);
+            hospitalDtos.add(hospitalDto);
+        }
+
+        return hospitalDtos;
     }
 
     @Override

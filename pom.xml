@@ -10,7 +10,7 @@
     </parent>
     <groupId>kr.hansung.medibugiback</groupId>
     <artifactId>MediBogiBack</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.4-SNAPSHOT</version>
     <name>MediBogiBack</name>
     <description>MediBogiBack</description>
     <properties>

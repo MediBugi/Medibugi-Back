@@ -1,6 +1,7 @@
 package kr.hansung.medibugiback.controller;
 
 import kr.hansung.medibugiback.domain.Hospital;
+import kr.hansung.medibugiback.dto.HospitalDto;
 import kr.hansung.medibugiback.repository.HospitalRepository;
 import kr.hansung.medibugiback.service.HospitalService;
 import org.json.simple.JSONArray;
@@ -23,7 +24,7 @@ public class HospitalController {
 
 
     @GetMapping("/getHospitalList")
-    public List<Hospital> hospitalList(@RequestParam("depart")
+    public List<HospitalDto> hospitalList(@RequestParam("depart")
                                   String depart){
 
 
@@ -31,32 +32,57 @@ public class HospitalController {
     }
 
     @GetMapping("/getHospitalListByLocation")
-    public List<Hospital> hospitalListByLocation(@RequestParam
-            ("sido")String sido, @RequestParam("sggu") String sggu, @RequestParam("depart")String depart){
-        if(sido.equals("전체")&&sggu.equals("전체")&&depart.equals("전체")){
+    public List<HospitalDto> hospitalListByLocation(@RequestParam
+            ("sido")String sido, @RequestParam("sggu") String sggu, @RequestParam("depart")String depart, @RequestParam("name") String name){
+        if(sido.equals("전체")&&sggu.equals("전체")&&depart.equals("전체")&&name.equals("전체")){
             return hospitalService.getHospitalList();
         }
         if(sido.equals("전체")&&sggu.equals("전체")&&!depart.equals("전체")){
-            return hospitalService.getHospitalList(depart);
+            if(name.equals("전체")){
+                return hospitalService.getHospitalList(depart);
+            }
+            else{
+                return hospitalService.getHospitalListAndName(depart,name);
+            }
+
         }
         if(!sido.equals("전체")&&sggu.equals("전체")&&!depart.equals("전체")){
-            return hospitalService.getHospitalListBySidoAndDepart(sido, depart);
+            if(name.equals("전체")){
+                return hospitalService.getHospitalListBySidoAndDepart(sido, depart);
+            }
+            else{
+                return hospitalService.getHospitalListBySidoAndDepartAndName(sido, depart, name);
+            }
         }
         if(!sido.equals("전체")&&!sggu.equals("전체")&&depart.equals("전체")){
-            return hospitalService.getHospitalListBySidoAndSggu(sido, sggu);
+            if(name.equals("전체")){
+                return hospitalService.getHospitalListBySidoAndSggu(sido, sggu);
+            }
+            else{
+                return hospitalService.getHospitalListBySidoAndSgguAndName(sido, sggu, name);
+            }
         }
         if(!sido.equals("전체")&&sggu.equals("전체")&&depart.equals("전체")){
-            return hospitalService.getHospitalListBySido(sido);
+            if(name.equals("전체")){
+                return hospitalService.getHospitalListBySido(sido);
+            }
+            else{
+                return hospitalService.getHospitalListBySidoAndName(sido, name);
+            }
         }
 
 
         // ja = hospitalService.getHospitalList(sido, sggu,depart);
-        return hospitalService.getHospitalList(sido, sggu, depart);
+        if(name.equals("전체")){
+            return hospitalService.getHospitalList(sido, sggu, depart);        }
+        else{
+            return hospitalService.getHospitalListAndName(sido, sggu, depart, name);
+        }
     }
 
     @GetMapping("/getAllList")
-    public List<Hospital> getHospitalList(){
-        return hospitalService.getHospitalList();
+    public List<HospitalDto> getHospitalList(@RequestParam("sido") String sido){
+        return hospitalService.getHospitalListBySido(sido);
     }
 
     @GetMapping("/timetest")

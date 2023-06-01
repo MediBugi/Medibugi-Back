@@ -120,6 +120,64 @@ public interface HospitalRepository extends JpaRepository<Hospital,Long> {
             "GROUP BY h.code ", nativeQuery = true)
     Hospital findHospitalCode(String code);
 
+    @Query(value = "SELECT h.code AS hospital_code, " +
+            "GROUP_CONCAT(DISTINCT h.mediDepart SEPARATOR ', ') AS mediDepart, " +
+            "h.addr, h.chFriEnd, h.chFriStart, h.chMonEnd, h.chMonStart, h.chSatEnd, h.chSatStart, " +
+            "h.chSunEnd, h.chSunStart, h.chThuEnd, h.chThuStart, h.chTueEnd, h.chTueStart, " +
+            "h.chWenEnd, h.chWenStart, h.clCdNm, h.code, h.drTotCnt, h.emdongNm, " +
+            "h.hospUrl, h.lunchNom, h.lunchSat, h.receipt_Sat, h.receipt_Week, " +
+            "h.restDay, h.sgguCdNm, h.sidoCdNm, h.sunRestDay, h.telno, h.x, h.y, h.yadmNm, h.hoscnt " +
+            "FROM Hospital h " +
+            "WHERE h.addr like %:sido% AND h.yadmNm like %:name% " +
+            "GROUP BY h.code ", nativeQuery = true)
+    List<Hospital> findBysidoAndName(String sido, String name);
+    @Query(value = "SELECT h.code AS hospital_code, " +
+            "GROUP_CONCAT(DISTINCT h.mediDepart SEPARATOR ', ') AS mediDepart, " +
+            "h.addr, h.chFriEnd, h.chFriStart, h.chMonEnd, h.chMonStart, h.chSatEnd, h.chSatStart, " +
+            "h.chSunEnd, h.chSunStart, h.chThuEnd, h.chThuStart, h.chTueEnd, h.chTueStart, " +
+            "h.chWenEnd, h.chWenStart, h.clCdNm, h.code, h.drTotCnt, h.emdongNm, " +
+            "h.hospUrl, h.lunchNom, h.lunchSat, h.receipt_Sat, h.receipt_Week, " +
+            "h.restDay, h.sgguCdNm, h.sidoCdNm, h.sunRestDay, h.telno, h.x, h.y, h.yadmNm, h.hoscnt " +
+            "FROM Hospital h " +
+            "WHERE h.addr like %:sido% AND h.addr like %:sggu% AND h.yadmNm like %:name% " +
+            "GROUP BY h.code ", nativeQuery = true)
+    List<Hospital> findByAddrAndName(String sido, String sggu, String name);
+    @Query(value = "SELECT h.code AS hospital_code, " +
+            "GROUP_CONCAT(DISTINCT h.mediDepart SEPARATOR ', ') AS mediDepart, " +
+            "h.addr, h.chFriEnd, h.chFriStart, h.chMonEnd, h.chMonStart, h.chSatEnd, h.chSatStart, " +
+            "h.chSunEnd, h.chSunStart, h.chThuEnd, h.chThuStart, h.chTueEnd, h.chTueStart, " +
+            "h.chWenEnd, h.chWenStart, h.clCdNm, h.code, h.drTotCnt, h.emdongNm, " +
+            "h.hospUrl, h.lunchNom, h.lunchSat, h.receipt_Sat, h.receipt_Week, " +
+            "h.restDay, h.sgguCdNm, h.sidoCdNm, h.sunRestDay, h.telno, h.x, h.y, h.yadmNm, h.hoscnt " +
+            "FROM Hospital h " +
+            "WHERE h.addr like %:sido% AND h.addr like %:sggu% AND h.yadmNm like %:name% " +
+            "GROUP BY h.code " +
+            "HAVING GROUP_CONCAT(DISTINCT h.mediDepart SEPARATOR ', ') LIKE %:mediDepart%", nativeQuery = true)
+    List<Hospital> findbyAddrAndMediDepartAndName(String sido, String sggu, String mediDepart, String name);
 
-    List<Hospital> findByChMonStartIsNull();
+    @Query(value = "SELECT h.code AS hospital_code, " +
+            "GROUP_CONCAT(DISTINCT h.mediDepart SEPARATOR ', ') AS mediDepart, " +
+            "h.addr, h.chFriEnd, h.chFriStart, h.chMonEnd, h.chMonStart, h.chSatEnd, h.chSatStart, " +
+            "h.chSunEnd, h.chSunStart, h.chThuEnd, h.chThuStart, h.chTueEnd, h.chTueStart, " +
+            "h.chWenEnd, h.chWenStart, h.clCdNm, h.code, h.drTotCnt, h.emdongNm, " +
+            "h.hospUrl, h.lunchNom, h.lunchSat, h.receipt_Sat, h.receipt_Week, " +
+            "h.restDay, h.sgguCdNm, h.sidoCdNm, h.sunRestDay, h.telno, h.x, h.y, h.yadmNm, h.hoscnt " +
+            "FROM Hospital h " +
+            "WHERE h.addr like %:sido% AND h.yadmNm like %:name% " +
+            "GROUP BY h.code " +
+            "HAVING GROUP_CONCAT(DISTINCT h.mediDepart SEPARATOR ', ') LIKE %:depart%", nativeQuery = true)
+    List<Hospital> findBySidoAndMediDepartAndName(String sido, String depart, String name);
+
+    @Query(value = "SELECT h.code AS hospital_code, " +
+            "GROUP_CONCAT(DISTINCT h.mediDepart SEPARATOR ', ') AS mediDepart, " +
+            "h.addr, h.chFriEnd, h.chFriStart, h.chMonEnd, h.chMonStart, h.chSatEnd, h.chSatStart, " +
+            "h.chSunEnd, h.chSunStart, h.chThuEnd, h.chThuStart, h.chTueEnd, h.chTueStart, " +
+            "h.chWenEnd, h.chWenStart, h.clCdNm, h.code, h.drTotCnt, h.emdongNm, " +
+            "h.hospUrl, h.lunchNom, h.lunchSat, h.receipt_Sat, h.receipt_Week, " +
+            "h.restDay, h.sgguCdNm, h.sidoCdNm, h.sunRestDay, h.telno, h.x, h.y, h.yadmNm, h.hoscnt " +
+            "FROM Hospital h " +
+            "WHERE h.yadmNm like %:name% " +
+            "GROUP BY h.code " +
+            "HAVING GROUP_CONCAT(DISTINCT h.mediDepart SEPARATOR ', ') LIKE %:depart%", nativeQuery = true)
+    List<Hospital> findByMediDepartAndName(String depart, String name);
 }
