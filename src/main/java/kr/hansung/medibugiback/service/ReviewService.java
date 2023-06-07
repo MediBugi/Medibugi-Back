@@ -68,9 +68,9 @@ public class ReviewService {
         return false;
     }
 
-    public List<ReviewDto> getReview(String code){
+    public List<ReviewDto> getReview(Long hoscnt){
 
-        Hospital hospital = hosRepo.findHospitalCode(code);
+        Hospital hospital = hosRepo.findByHoscnt(hoscnt);
 
         List<Review> reviewList = reviewRepo.findByHospital(hospital);
 
@@ -99,8 +99,8 @@ public class ReviewService {
 
     public List<Review> addreviewTest(){
         List<Review> reviewList = new ArrayList<>();
-        List<Hospital> hospitalList = hosRepo.findByAddrStartingWithAndAddrContaining("서울특별시","성북구");
-        MemberEntity member = memRepo.findByMemberid("hansung1");
+        List<Hospital> hospitalList = hosRepo.findByAddrStartingWithAndAddrContaining("서울특별시","중구");
+        MemberEntity member = memRepo.findByMemberid("hello");
 
         Random random = new Random();
         long seed = System.currentTimeMillis();
